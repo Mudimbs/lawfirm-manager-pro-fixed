@@ -4,8 +4,7 @@
   "description": "Logiciel de gestion d'un cabinet d'avocats (Express + EJS + SQLite).",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
-    "dev": "nodemon app.js"
+    "start": "node app.js"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
@@ -21,11 +20,7 @@
     "pdfkit": "^0.15.0",
     "nodemailer": "^6.9.13"
   },
-  "devDependencies": {
-    "nodemon": "^3.1.0"
+  "engines": {
+    "node": ">=18"
   }
-  "scripts": {
-  "start": "node app.js"
-}
-
 }
