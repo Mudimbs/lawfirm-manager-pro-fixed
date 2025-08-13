@@ -1,7 +1,18 @@
+<!DOCTYPE html>
+<html lang="fr">
 <head>
-<link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#0d6efd">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title || "LawFirm Manager" %></title>
+
+  <!-- Stylesheet (black & white theme) -->
+  <link rel="stylesheet" href="/styles.css">
+
+  <!-- PWA -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#000000">
   <link rel="apple-touch-icon" href="/icons/icon-192x192.png">
+
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', function() {
@@ -10,3 +21,31 @@
     }
   </script>
 </head>
+<body>
+  <div class="header">
+    <div class="container">
+      <div class="brand">⚖️ <span>Mudimbs Avocat</span></div>
+      <div class="nav">
+        <a href="/">Tableau de bord</a>
+        <a href="/clients">Clients</a>
+        <a href="/dossiers">Dossiers</a>
+        <a href="/audiences">Audiences</a>
+        <a href="/factures">Factures</a>
+        <a href="/documents">Documents</a>
+        <a href="/finance">Finance</a>
+        <% if (user && user.role === 'admin') { %>
+          <a href="/utilisateurs">Utilisateurs</a>
+        <% } %>
+        <span style="flex:1"></span>
+        <a href="/logout" class="btn">Se déconnecter</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <% if (messages && messages.error) { %>
+      <div class="flash error"><%= messages.error %></div>
+    <% } %>
+    <% if (messages && messages.success) { %>
+      <div class="flash success"><%= messages.success %></div>
+    <% } %>
