@@ -1,0 +1,15 @@
+<%- include("partials/header") %>
+<h1>Tableau de bord</h1>
+<div class="row">
+  <div style="border:1px solid #eee; border-radius:12px; padding:16px;">
+    <div style="font-size:14px; opacity:.7;">Nombre de clients</div>
+    <div style="font-size:36px; font-weight:800;"><%= clientsCount %></div>
+    <a class="btn" href="/clients">Gérer les clients</a>
+  </div>
+  <div style="border:1px solid #eee; border-radius:12px; padding:16px;">
+    <div style="font-size:14px; opacity:.7;">Nombre de dossiers</div>
+    <div style="font-size:36px; font-weight:800;"><%= casesCount %></div>
+    <a class="btn" href="/dossiers">Gérer les dossiers</a>
+  </div>
+</div>
+<%- include("partials/footer") %>

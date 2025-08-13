@@ -1,0 +1,37 @@
+<%- include("../partials/header") %>
+<div style="display:flex; justify-content:space-between; align-items:center;">
+  <h1>Dossiers</h1>
+  <a class="btn primary" href="/dossiers/new">+ Nouveau dossier</a>
+</div>
+<form method="get" style="margin:10px 0;">
+  <input name="q" placeholder="Rechercher par titre, référence" value="<%= typeof q !== 'undefined' ? q : '' %>"/>
+  <select name="status">
+    <option value="">Tous les statuts</option>
+    <option>Ouvert</option>
+    <option>En cours</option>
+    <option>Clos</option>
+  </select>
+  <button class="btn">Rechercher</button>
+</form>
+<table>
+  <thead>
+    <tr><th>Titre</th><th>Référence</th><th>Client</th><th>Statut</th><th>Actions</th></tr>
+  </thead>
+  <tbody>
+    <% cases.forEach(d => { %>
+      <tr>
+        <td><%= d.title %></td>
+        <td><%= d.reference || "" %></td>
+        <td><%= d.client_name %></td>
+        <td><%= d.status %></td>
+        <td>
+          <a class="btn" href="/dossiers/<%= d.id %>/edit">Modifier</a>
+          <% if (user && user.role === 'admin') { %><form action="/dossiers/<%= d.id %>/delete" method="post" style="display:inline;">
+            <button class="btn danger" onclick="return confirm('Supprimer ce dossier ?')">Supprimer</button>
+          </form>
+        </td><% } %>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>
+<%- include("../partials/footer") %>

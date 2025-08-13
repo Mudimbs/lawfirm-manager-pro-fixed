@@ -1,0 +1,67 @@
+<%- include("../partials/header") %>
+<div style="display:flex; justify-content:space-between; align-items:center;">
+  <h1>Factures</h1>
+  <div>
+    <a class="btn" href="/export/db">Backup DB</a>
+    <a class="btn" href="/export/clients.csv">Export Clients</a>
+    <a class="btn" href="/export/dossiers.csv">Export Dossiers</a>
+  </div>
+</div>
+
+<form action="/factures" method="post" style="margin:12px 0; border:1px solid #eee; padding:12px; border-radius:10px;">
+  <div class="row">
+    <div>
+      <label>Dossier</label>
+      <select name="case_id" required>
+        <% cases.forEach(d => { %>
+          <option value="<%= d.id %>"><%= d.title %></option>
+        <% }) %>
+      </select>
+    </div>
+    <div>
+      <label>Montant (USD)</label>
+      <input type="number" step="0.01" name="amount" required/>
+    </div>
+  </div>
+  <label>Statut</label>
+  <select name="status">
+    <option>Non payé</option>
+    <option>Payé</option>
+    <option>Partiel</option>
+  </select>
+  <label>Notes</label><textarea name="notes" rows="3"></textarea>
+  <button class="btn primary" style="margin-top:10px;">Créer</button>
+</form>
+
+<table>
+  <thead><tr><th>#</th><th>Dossier</th><th>Montant</th><th>Statut</th><th>Émise le</th><th>Actions</th></tr></thead>
+  <tbody>
+    <% invoices.forEach(i => { %>
+      <tr>
+        <td><%= i.id %></td>
+        <td><%= i.case_title %></td>
+        <td><%= i.amount %></td>
+        <td>
+          <form action="/factures/<%= i.id %>" method="post">
+            <select name="status">
+              <option <%= i.status==='Non payé'?'selected':'' %> >Non payé</option>
+              <option <%= i.status==='Payé'?'selected':'' %> >Payé</option>
+              <option <%= i.status==='Partiel'?'selected':'' %> >Partiel</option>
+            </select>
+            <input type="hidden" name="amount" value="<%= i.amount %>"/>
+            <input type="hidden" name="notes" value="<%= i.notes || '' %>"/>
+            <button class="btn">MAJ</button>
+          </form>
+        </td>
+        <td><%= i.issued_at %></td>
+        <td>
+          <a class="btn" href="/factures/<%= i.id %>/pdf" target="_blank">PDF</a>
+          <% if (user && user.role === 'admin') { %><form action="/factures/<%= i.id %>/delete" method="post" style="display:inline;">
+            <button class="btn danger" onclick="return confirm('Supprimer ?')">Supprimer</button>
+          </form><% } %>
+        </td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>
+<%- include("../partials/footer") %>

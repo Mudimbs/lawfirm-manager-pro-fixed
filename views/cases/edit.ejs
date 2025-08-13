@@ -1,0 +1,37 @@
+<%- include("../partials/header") %>
+<h1>Modifier dossier</h1>
+<form action="/dossiers/<%= dossier.id %>" method="post" enctype="multipart/form-data">
+  <label>Titre</label>
+  <input name="title" value="<%= dossier.title %>" required />
+  <div class="row">
+    <div>
+      <label>Référence</label>
+      <input name="reference" value="<%= dossier.reference || '' %>" />
+    </div>
+    <div>
+      <label>Client</label>
+      <select name="client_id" required>
+        <% clients.forEach(c => { %>
+          <option value="<%= c.id %>" <%= c.id === dossier.client_id ? 'selected' : '' %>><%= c.fullname %></option>
+        <% }) %>
+      </select>
+    </div>
+  </div>
+  <label>Statut</label>
+  <select name="status">
+    <option <%= dossier.status === 'Ouvert' ? 'selected' : '' %> >Ouvert</option>
+    <option <%= dossier.status === 'En cours' ? 'selected' : '' %> >En cours</option>
+    <option <%= dossier.status === 'Clos' ? 'selected' : '' %> >Clos</option>
+  </select>
+  <label>Description</label>
+  <textarea name="description" rows="4"><%= dossier.description || '' %></textarea>
+
+  <h3>Ajouter un document</h3>
+  <input type="file" name="document"/>
+  <button class="btn" formaction="/dossiers/<%= dossier.id %>/upload">Uploader</button>
+
+  <div style="margin-top:12px;">
+    <button class="btn primary">Mettre à jour</button>
+  </div>
+</form>
+<%- include("../partials/footer") %>

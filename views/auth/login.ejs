@@ -1,0 +1,11 @@
+<%- include("../partials/header") %>
+  <h1>Connexion</h1>
+  <p>Identifiants par défaut : <b>admin@cabinet.local</b> / <b>admin123</b></p>
+  <form action="/login" method="post" style="max-width:480px;">
+    <label>Email</label>
+    <input type="email" name="email" required/>
+    <label>Mot de passe</label>
+    <input type="password" name="password" required/>
+    <button class="btn primary" style="margin-top:12px;">Se connecter</button>
+  </form>
+<%- include("../partials/footer") %>

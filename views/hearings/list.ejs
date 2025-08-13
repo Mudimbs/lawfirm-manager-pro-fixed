@@ -1,0 +1,49 @@
+<%- include("../partials/header") %>
+<div style="display:flex; justify-content:space-between; align-items:center;">
+  <h1>Audiences</h1>
+</div>
+
+<form action="/audiences" method="post" style="margin:12px 0; border:1px solid #eee; padding:12px; border-radius:10px;">
+  <div class="row">
+    <div>
+      <label>Dossier</label>
+      <select name="case_id" required>
+        <% cases.forEach(d => { %>
+          <option value="<%= d.id %>"><%= d.title %></option>
+        <% }) %>
+      </select>
+    </div>
+    <div>
+      <label>Date & heure</label>
+      <input type="datetime-local" name="date" required/>
+    </div>
+  </div>
+  <label>Lieu</label><input name="location"/>
+  <label>Notes</label><textarea name="notes" rows="3"></textarea>
+  <button class="btn primary" style="margin-top:10px;">Ajouter</button>
+</form>
+
+<table>
+  <thead><tr><th>Date</th><th>Dossier</th><th>Lieu</th><th>Notes</th><th>Actions</th></tr></thead>
+  <tbody>
+    <% hearings.forEach(h => { %>
+      <tr>
+        <td><%= h.date %></td>
+        <td><%= h.case_title %></td>
+        <td><%= h.location || "" %></td>
+        <td><%= h.notes || "" %></td>
+        <td>
+          <form action="/audiences/<%= h.id %>/delete" method="post" style="display:inline;">
+            <button class="btn danger" onclick="return confirm('Supprimer ?')">Supprimer</button>
+          </form>
+          <a class="btn" href="/audiences/<%= h.id %>/ics">ICS</a>
+          <form action="/audiences/<%= h.id %>/email" method="post" style="display:inline; margin-left:6px;">
+            <input type="email" name="to" placeholder="email@exemple.com" required style="width:200px;"/>
+            <button class="btn">Envoyer rappel</button>
+          </form>
+        </td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>
+<%- include("../partials/footer") %>

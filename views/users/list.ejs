@@ -1,0 +1,51 @@
+<%- include("../partials/header") %>
+<h1>Utilisateurs (admin)</h1>
+
+<form action="/utilisateurs" method="post" style="margin:12px 0; border:1px solid #eee; padding:12px; border-radius:10px; max-width:700px;">
+  <div class="row">
+    <div>
+      <label>Nom</label>
+      <input name="name" required/>
+    </div>
+    <div>
+      <label>Email</label>
+      <input type="email" name="email" required/>
+    </div>
+  </div>
+  <div class="row">
+    <div>
+      <label>Mot de passe</label>
+      <input type="password" name="password" required/>
+    </div>
+    <div>
+      <label>Rôle</label>
+      <select name="role">
+        <option>utilisateur</option>
+        <option>admin</option>
+      </select>
+    </div>
+  </div>
+  <button class="btn primary" style="margin-top:10px;">Créer l'utilisateur</button>
+</form>
+
+<table>
+  <thead><tr><th>Nom</th><th>Email</th><th>Rôle</th><th>Créé le</th><th>Mot de passe</th></tr></thead>
+  <tbody>
+    <% users.forEach(u => { %>
+      <tr>
+        <td><%= u.name %></td>
+        <td><%= u.email %></td>
+        <td><%= u.role %></td>
+        <td><%= u.created_at %></td>
+        <td>
+          <form action="/utilisateurs/<%= u.id %>/password" method="post" style="display:inline;">
+            <input type="password" name="password" placeholder="Nouveau mot de passe" required/>
+            <button class="btn">Changer</button>
+          </form>
+        </td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>
+
+<%- include("../partials/footer") %>
